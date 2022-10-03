@@ -1,3 +1,4 @@
+import { GraphQLContext } from "../../util/types";
 
 const resolvers = {
     Query: {
@@ -8,6 +9,7 @@ const resolvers = {
             const {username} = args
             
             console.log("HEY", username)
+            console.log("HERE IS CONTEXT", context);
         },
     },
 }

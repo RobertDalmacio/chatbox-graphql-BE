@@ -8,7 +8,7 @@ import express from 'express';
 import http from 'http';
 import typeDefs from './graphql/typeDefs'
 import resolvers from './graphql/resolvers'
-import {getSession} from 'next-auth/react'
+import { getSession } from "next-auth/react"
 import * as dotenv from 'dotenv'
 import { GraphQLContext } from './util/types';
 
@@ -33,7 +33,11 @@ async function main() {
         cache: 'bounded',
         context: async ({req, res}): Promise<GraphQLContext> => {
             const session = await getSession({req})
-            console.log("CONTEXT SESSION", session)
+            if (session) {
+                console.log("CONTEXT SESSION", session)
+            } else {
+                console.log("NOT LOGGED IN")
+            }
             return {session}
         },
         plugins: [

@@ -17,6 +17,7 @@
     "graphql-tools": "^8.3.6",
     "lodash.merge": "^4.6.2",
     "next-auth": "^4.12.2",
+    "node-fetch": "^3.2.10",
     "ts-node": "^10.9.1"
   },
   "devDependencies": {
