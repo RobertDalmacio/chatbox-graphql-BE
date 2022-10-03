@@ -11,7 +11,7 @@ import resolvers from './graphql/resolvers'
 import { getSession } from "next-auth/react"
 import {PrismaClient} from '@prisma/client'
 import * as dotenv from 'dotenv'
-import { GraphQLContext } from './util/types';
+import { GraphQLContext, Session } from './util/types';
 
 async function main() {
     dotenv.config()
@@ -34,13 +34,9 @@ async function main() {
         schema,
         csrfPrevention: true,
         cache: 'bounded',
-        context: async ({req, res}): Promise<GraphQLContext> => {
-            const session = await getSession({req})
-            if (session) {
-                console.log("CONTEXT SESSION", session)
-            } else {
-                console.log("NOT LOGGED IN")
-            }
+        context: async ({req, res}): Promise<GraphQLContext | null> => {
+            const session = await getSession({ req }) as Session
+
             return {session, prisma}
         },
         plugins: [
