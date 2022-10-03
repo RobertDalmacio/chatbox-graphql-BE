@@ -9,6 +9,7 @@ import http from 'http';
 import typeDefs from './graphql/typeDefs'
 import resolvers from './graphql/resolvers'
 import { getSession } from "next-auth/react"
+import {PrismaClient} from '@prisma/client'
 import * as dotenv from 'dotenv'
 import { GraphQLContext } from './util/types';
 
@@ -26,6 +27,8 @@ async function main() {
         origin: process.env.CLIENT_ORIGIN,
         credentials: true
     }
+
+    const prisma = new PrismaClient()
     
     const server = new ApolloServer({
         schema,
@@ -38,7 +41,7 @@ async function main() {
             } else {
                 console.log("NOT LOGGED IN")
             }
-            return {session}
+            return {session, prisma}
         },
         plugins: [
             ApolloServerPluginDrainHttpServer({ httpServer }),

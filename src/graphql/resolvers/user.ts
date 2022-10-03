@@ -5,8 +5,9 @@ const resolvers = {
         searchUsers: () => {},
     },
     Mutation: {
-        createUsername: (_: any, args: {username: string}, context: any) => {
+        createUsername: (_: any, args: {username: string}, context: GraphQLContext) => {
             const {username} = args
+            const {session, prisma} = context
             
             console.log("HEY", username)
             console.log("HERE IS CONTEXT", context);
